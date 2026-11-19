@@ -1,0 +1,23 @@
+name: Deploy HTML Project to AWS EC2
+
+#on: [push,workflow_dispatch]
+
+on: workflow_dispatch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+        - name: Print message
+          run: date
+
+        - name: Print message
+          run: mkdir demo
+
+        - name: Print message
+          run: ls -l
+        
+        - name: workflow_dispatch
+          run: echo "Done"
+
