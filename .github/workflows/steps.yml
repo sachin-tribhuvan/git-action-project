@@ -21,3 +21,5 @@ jobs:
         - name: workflow_dispatch
           run: echo "Done"
 
+        - name: workflow_dispatch
+          run: echo "xyz"
