@@ -6,6 +6,8 @@ on:
     branches:
       - main
 
+  workflow_dispatch:
+
 jobs:
   deploy:
     runs-on: self-hosted
@@ -14,13 +16,18 @@ jobs:
       - name: Checkout GitHub Repository
         uses: actions/checkout@v4
 
+      - name: Check Files
+        run: |
+          pwd
+          ls -la
+          ls -l index.html
+
       - name: Deploy HTML Files to EC2
         run: |
           sudo rsync -avz --delete \
             --exclude='.git' \
             --exclude='.github' \
-            ./ \
-            /usr/share/nginx/html/
+            ./ /usr/share/nginx/html/
 
       - name: Restart Nginx
         run: |
@@ -28,4 +35,5 @@ jobs:
 
       - name: Verify Website
         run: |
+          ls -la /usr/share/nginx/html/
           curl -I http://localhost
