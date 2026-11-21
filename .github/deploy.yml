@@ -1,0 +1,31 @@
+
+name: Deploy HTML Project to AWS EC2
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout GitHub Repository
+        uses: actions/checkout@v4
+
+      - name: Deploy HTML Files to EC2
+        run: |
+          sudo rsync -avz --delete \
+            --exclude='.git' \
+            --exclude='.github' \
+            ./ \
+            /usr/share/nginx/html/
+
+      - name: Restart Nginx
+        run: |
+          sudo systemctl restart nginx
+
+      - name: Verify Website
+        run: |
+          curl -I http://localhost
